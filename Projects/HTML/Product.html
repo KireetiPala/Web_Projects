@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <fieldset>
+            <legend>Product details form</legend>
+            <label for="">Product ID</label>
+            <input type="text" id="productID"><br>
+
+            <label for="">Product Name</label>
+            <input type="text" id="productName"><br>
+
+            <label for="">Product Description<label>
+            <textarea name="" id="productDesc" cols="30" rows="10"></textarea><br>
+
+            <label for="">Category</label>
+            <select name="" id="category">
+                <option value="male">Male</option>
+                <option value="women">women</option>
+            </select><br><br><br>
+
+            <button onclick="storeData()">Add Product info</button> &nbsp;
+            <button onclick="retrieveData()">Display Product info</button>
+
+        </fieldset>
+         <table id="dyncTable">
+
+         </table>
+
+        <script src="../JS/productJs.js">    
+            
+        
+        </script>
+
+
+
+
+
+
+
+
+    </form>
+</body>
+</html>

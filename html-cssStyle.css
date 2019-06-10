@@ -1,0 +1,62 @@
+
+body{
+    font-family: 'Muli', sans-serif;
+}
+h1{
+    background-color: #ff6633;
+    color: white;
+    text-align: center;
+    font-size: 35px;
+}
+p{
+    font-size: 18px;
+}
+
+table{
+    text-align: center;
+    margin-top: 30px;
+    height: 40%;
+    width: 100%;
+    background-color: lightgrey;
+}
+th{
+    background-color: #ff6633;
+    color: white;
+    font-size: 20px;
+}
+td, th{
+    padding: 13px;
+    border: 1px solid grey;
+}
+
+ul{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    background-color: #ff6633;
+    overflow: hidden;
+}
+ul li{
+    float: left;
+    padding: 10px 20px;
+}
+ul li a{
+    text-decoration: none;
+    color: white;
+}
+.active{
+    background-color: grey;
+    
+}
+form{
+    width: 35%;
+    margin: 0 auto;
+    border: 1px solid grey;
+  
+}
+label{
+   float: left;
+}
+h2{
+    text-align: center;
+}

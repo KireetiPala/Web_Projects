@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+
+    <link rel="stylesheet" href="../CSS/productWebsiteStyle.css">
+    <script src="../JS/productWebsiteJs.js"></script>
+
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+
+   <!-- bootstrap CDN starts-->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="../CSS/bootstrap.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+  <script src="../JS/bootstrap.js"></script>
+  <!-- bootstrap CDN ends -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+               <div class="row">
+                   <div class="col-lg-4">
+                        <h3>Site to buy products</h3>
+                   </div>
+                   <div class="col-lg-8">
+                        <ul class="Menubar">
+                            <!-- <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            
+                            <li class="rightmove"><a href="#">Sign Up</a></li> -->
+                            <li class="rightmove"><a href="../HTML/productWebsiteIndex.html">Back to Home Page</a></li>
+                            <li id="time"></li>
+                        </ul>                      
+                   </div>
+               </div>
+            </nav>
+        </header>
+        <section>
+            <div class="row">
+                <div class="col-lg-6" id="loginbgc_left">
+                </div>
+                <div class="col-lg-6" id="loginbgc_right">
+                        <h3>Site to buy products</h3>
+                        <p>Get access to your Orders, Wishlist and Recommendations</p>
+                        <div class="form_container" >
+                            <p>Login</p>                               
+                            <form action="" onsubmit="return (onLoginFormSubmit())" id="loginForm" autocomplete="off" novalidate event.preventDefault();>
+                               <div>
+                                   <input type="text" name="" id="loginEmailID" required="">
+                                   <span id="error_EmailID" class="error_loginform"></span>
+                                   <label for="">Email ID</label>
+                               </div>
+                               <div>
+                                   <input type="password" name="" id="loginPassword" required="">
+                                   <span id="error_Password" class="error_loginform"></span>
+                                   <label for="">Password</label>
+                               </div>
+                               <div>
+                                   <input type="submit"  value="Login">
+                               </div>                               
+                            </form>
+                            <div>
+                                <a href="#" id="forgetPsd"><strong>Forget Password?</strong></a>&nbsp;
+                                <strong>(Or)</strong> &nbsp;
+                                <a href="../HTML/registerForm.html" id="signUp"><strong>Sign Up</strong></a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+           
+        </section>
+    </div>
+    
+    
+    
+</body>
+</html>

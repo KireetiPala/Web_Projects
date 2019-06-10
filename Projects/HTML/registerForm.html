@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register Page</title>
+
+    <link rel="stylesheet" href="../CSS/productWebsiteStyle.css">
+    <script src="../JS/productWebsiteJs.js"></script>
+
+<!-- google fonts -->
+<link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+
+   <!-- bootstrap CDN starts-->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="../CSS/bootstrap.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+  <script src="../JS/bootstrap.js"></script>
+  <!-- bootstrap CDN ends -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+               <div class="row">
+                   <div class="col-lg-4">
+                        <h3>Site to buy products</h3>
+                   </div>
+                   <div class="col-lg-8">
+                        <ul class="Menubar">
+                            <!-- <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            
+                            <li class="rightmove"><a href="#">Sign Up</a></li> -->
+                            <li class="rightmove"><a href="../HTML/productWebsiteIndex.html">Back to Home Page</a></li>
+                            <li id="time"></li>
+                        </ul>                      
+                   </div>
+               </div>
+            </nav>
+        </header>
+        <section>
+            <div class="row">
+                <div class="col-lg-5" id="leftregbgc">
+                    <h2>SignUp</h2>
+                    <h5>We do not share your personal details with anyone.</h5>
+                </div>
+                <div class="col-lg-7" id="rightregbgc">
+                        <div class="registerForm" >
+                            <p>Register Form</p>                               
+                            <form action="" onsubmit="return (onSignFormSubmit())" autocomplete="off" event.preventDefault();>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label for="">First Name*</label>&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" name="" id="firstName">  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>                                            
+                                        </td>
+                                        <td>
+                                            <span id="error_FirstName" class="error_registerform"></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label for="">Last Name*</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="" id="lastName">  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>                                            
+                                        </td>
+                                        <td>
+                                            <span id="error_lastName" class="error_registerform"></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label for="">Gender*</label>
+                                        </td>
+                                        <td>
+                                            <select name="" id="gender">
+                                                    <option value="">Select gender</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                            </select>  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <span id="error_gender" class="error_registerform"></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label for="">Email ID*</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="" id="registerEmailID" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <span id="error_registeremailID" class="error_registerform"></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label for="">Password*</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" name="" id="registerPassword" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <span id="error_registerpassword" class="error_registerform"></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label for="">Re enter Password*</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" name="" id="reenterPassword" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <span id="error_reenterpassword" class="error_registerform"></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label for="">Contact Number*</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="" id="regcontactNum">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <span id="error_contactNum" class="error_registerform"></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label for="">Area's of intrests</label>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" value="Sports" class="interests"><label for="Sports">Sports</label>
+                                            <input type="checkbox" value="Movies" class="interests"><label for="Movies">Movies</label>
+                                            <input type="checkbox" value="Others" class="interests"><label for="Others">Others</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <input type="submit" id="submitbtn" value="Register">
+                                            <!-- <input type="reset"   value="Reset Form" onclick="resetRegisterForm()"> -->
+                                        </td>
+                                    </tr>
+
+                                </table>
+                             
+                               
+                            </form>
+                        </div>
+                </div>
+            </div>
+           
+        </section>
+    </div>
+    
+    
+    
+</body>
+</html>

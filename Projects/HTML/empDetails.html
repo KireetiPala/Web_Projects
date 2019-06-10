@@ -1,0 +1,211 @@
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="mystyle.css" rel="stylesheet"/>
+        <script>
+            var studentsArray = [];
+            var selectedIndex = -1;
+            function init() {
+                document.getElementById("tablerows").innerHTML = "";
+                if (localStorage.studentsRecord) {
+                    studentsArray = JSON.parse(localStorage.studentsRecord);
+                    for (var i = 0; i < studentsArray.length; i++) {
+                        prepareTableCell(i, studentsArray[i].firstname, studentsArray[i].lastname, studentsArray[i].rollnum, studentsArray[i].subject);
+                    }
+                }
+            }   
+            function onRegisterPressed() {
+                var firstName = document.getElementById("firstname").value;
+                var lastName = document.getElementById("lastname").value;
+                var rollNum = document.getElementById("rollnum").value;
+                var subject = document.getElementById("subject").value;
+                var stuObj = {firstname: firstName, lastname: lastName, rollnum: rollNum, subject: subject};
+                if (selectedIndex === -1) {
+                    studentsArray.push(stuObj);
+                } else {
+                    studentsArray.splice(selectedIndex, 1, stuObj);
+                }
+                localStorage.studentsRecord = JSON.stringify(studentsArray);
+                init();
+                onClarPressed();
+            }
+            function prepareTableCell(index, firstName, lastName, rollNum, subject) {
+                var table = document.getElementById("tablerows");
+                var row = table.insertRow();
+                var firstNameCell = row.insertCell(0);
+                var lastNameCell = row.insertCell(1);
+                var rollNumCell = row.insertCell(2);
+                var subjectCell = row.insertCell(3);
+                var actionCell = row.insertCell(4);
+                firstNameCell.innerHTML = firstName;
+                lastNameCell.innerHTML = lastName;
+                rollNumCell.innerHTML = rollNum;
+                subjectCell.innerHTML = subject;
+                actionCell.innerHTML = `<button onclick="onEditPressed(` + index + `)">Edit</button><br/><button onclick="deleteTableRow(` + index + `)">Delete</button>`;
+            }
+            function deleteTableRow(index) {
+                /*
+                 var table = document.getElementById("regtable");
+                 table.deleteRow(index+1);
+                 */
+                studentsArray.splice(index, 1);
+                localStorage.studentsRecord = JSON.stringify(studentsArray);
+                init();
+            }
+            function onClarPressed() {
+                selectedIndex = -1;
+                document.getElementById("firstname").value = "";
+                document.getElementById("lastname").value = "";
+                document.getElementById("rollnum").value = "";
+                document.getElementById("subject").value = "Math";
+                document.getElementById("submit").innerHTML = "Register";
+            }
+            
+            function onEditPressed(index) {
+                selectedIndex = index;
+                var stuObj = studentsArray[index];
+                document.getElementById("firstname").value = stuObj.firstname;
+                document.getElementById("lastname").value = stuObj.lastname;
+                document.getElementById("rollnum").value = stuObj.rollnum;
+                document.getElementById("subject").value = stuObj.subject;
+                document.getElementById("submit").innerHTML = "Update";
+                
+            }
+        </script>
+        <style>
+            body{
+    margin: 0;
+    font-family: sans-serif;
+}
+header,footer,aside{
+    display: block;
+}
+h1{
+    color: white;
+    text-align: center;
+}
+label{
+    display: block; 
+}
+fieldset{
+    border: 0px dotted red;
+    width: 400px;
+    margin: 0 auto;
+}
+input,select{
+    width: 400px;
+    height: 30px;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 14px;
+}
+select{
+    line-height:30px;
+    background:#f4f4f4;
+}
+button{
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 2px;
+    background: #ff0033;
+    color: #ffffff;
+    float: right;
+    width: 100px;
+}
+table{
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+th{
+    background: #ff9999;
+}
+th,td{
+    border: 2px solid black;
+    padding: 10px;
+}
+.container{
+    width: 1000px;
+    margin: 0 auto;
+}
+.headerbar{
+    width: 1000px;
+    float: left;
+}
+.headerbar.top{
+    background: #003333;
+    min-height: 100px;
+}
+.headerbar.bottom{
+    background: #333300;
+    min-height: 60px;
+}
+.leftbar{
+    width: 500px;
+    background: #009999;
+    min-height: 600px;
+    float: left;
+}
+.rightbar{
+    width: 480px;
+    background: #ccccff;
+    min-height: 580px;
+    float: left;
+    padding: 10px;
+}
+        </style>
+    </head>
+    <body onload="init()">
+        <div class="container">
+            <header class="headerbar top"><h1>Registration</h1></header>
+            <aside class="leftbar">
+                <div>
+                    <fieldset>
+                        <label for="firstname"><span>First Name</span></label>
+                        <input type="text" placeholder="enter first name" id="firstname">
+                    </fieldset>
+                    <fieldset>
+                        <label for="lastname">Last Name</label>
+                        <input type="text" placeholder="enter last name" id="lastname">
+                    </fieldset>
+                    <fieldset>
+                        <label for="rollnum">Roll Number</label>
+                        <input type="text" placeholder="enter Roll number" id="rollnum">
+                    </fieldset>
+                    <fieldset>
+                        <label for="subject">Subject</label>
+                        <select id="subject">
+                            <option value="Math">Math</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="English">English</option>
+                            <option value="Tamil">Tamil</option>
+                        </select>
+                    </fieldset>
+                    <fieldset>
+                        <label for="submit"> </label>
+                        <button id="submit" onclick="onRegisterPressed()">Register</button>
+                        <button id="clear" onclick="onClarPressed()">Clear</button>
+                    </fieldset>
+                </div>
+            </aside>
+            <aside class="rightbar">
+                <table id="regtable">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Roll Number</th>
+                            <th>Subject</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablerows">
+                    </tbody>
+                </table>
+            </aside>
+            <footer class="headerbar bottom"></footer>
+        </div>
+    </body>
+</html>

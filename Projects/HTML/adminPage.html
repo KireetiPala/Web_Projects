@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Page</title>
+
+    <link rel="stylesheet" href="../CSS/productWebsiteStyle.css">
+    <script src="../JS/productWebsiteJs.js"></script>
+
+<!-- google fonts -->
+<link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+
+   <!-- bootstrap CDN starts-->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="../CSS/bootstrap.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+  <script src="../JS/bootstrap.js"></script>
+  <!-- bootstrap CDN ends -->
+</head>
+<body onload="refreshData()">
+    <div class="container">
+        <header>
+            <nav>
+               <div class="row">
+                   <div class="col-lg-4">
+                        <h3>Site to buy products</h3>
+                   </div>
+                   <div class="col-lg-8">
+                        <ul class="Menubar">
+                            <!-- <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            
+                            <li class="rightmove"><a href="#">Sign Up</a></li> -->
+                            <li class="rightmove"><a href="../HTML/productWebsiteIndex.html">Back to Home Page</a></li>
+                            <li id="time"></li>
+                        </ul>                      
+                   </div>
+               </div>
+            </nav>
+        </header>
+        <section>
+            <div class="row">
+                <div class="col-lg-12" id="adminPage1">
+                    <div class="CRUDProducts">
+                        <form action=" "  autocomplete="off" novalidate event.preventDefault();>
+                            <div>
+                                <input type="text" id="productName" required="">
+                                <span id="error_productName" class="error_InForm"></span>
+                                <label for="">Product Name</label>
+                            </div>
+                            <div>
+                                <input type="text" id="productID" required="">
+                                <span id="error_productID" class="error_InForm"></span>
+                                <label for="">Product ID</label>
+                            </div>
+                            <div>
+                                <input type="text" id="productDesc" required="">
+                                <span id="error_productDesc" class="error_InForm"></span>
+                                <label for="">Product Short Description</label>
+                            </div>
+                            <div>
+                                <input type="text" id="productPrice" required="">
+                                <span id="error_productPrice" class="error_InForm"></span>
+                                <label for="">Product Original Price</label>
+                            </div>
+                            <div>
+                                <input type="text" id="discountPrice" required="">
+                                <span id="error_discountPrice" class="error_InForm"></span>
+                                <label for="">Product Discount Price</label>
+                            </div>
+                            <div>
+                                <input type="text" id="productDiscountPer" required="">
+                                <span id="error_productDiscountPer" class="error_InForm"></span>
+                                <label for="">Discount %</label>
+                            </div>
+                            <div>
+                                <input type="url" id="productImageURL" required="">
+                                <span id="error_productImageURL" class="error_InForm"></span>
+                                <label for="">Product ImageURL</label>
+                            </div>
+                            <div>
+                                <input type="submit" id="submit" onclick="onAddProductPressed()" value="Add Product">
+                            </div>
+                            <div>
+                                <input type="submit" onclick="resetadminForm()"  value="Reset Form">
+                            </div>
+                        </form>
+                    </div>
+                </div> 
+                <div class="col-lg-12" id="adminPage2">
+                    <div id="productsView">
+                      
+                    </div>
+                    <!-- <table id="productsTable">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Product ID</th>
+                                <th>Product Description</th>
+                                <th>Product Price</th>
+                                <th>Product Image URL</th>
+                                <th>Product Discount %</th>  
+                                <th>Edit/Delete Row</th>                          
+                            </tr>
+                        </thead>
+                        <tbody id="TableRows">
+
+                        </tbody>
+                    </table> -->
+                </div>
+            </div>
+           
+        </section>
+    </div>
+    
+    
+    
+</body>
+</html>

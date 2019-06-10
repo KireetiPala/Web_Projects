@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registration Form</title>
+<!-- bootstrap CDN starts-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!-- bootstrap CDN ends -->
+</head>
+<body>
+    <div class="container">
+            <h1>Registration Form</h1>
+            <form action="" name="registerForm"  id="regForm" oncopy="return disableCopy()"; onsubmit="return validateForm();event.preventDefault();" autocomplete="off">
+                    <label for="First Name">First Name:*</label><span id="fNameMsg"></span><br>
+                    <input type="text" name="fName" placeholder="Enter your first name" id="firstName" autofocus><br><br>
+        
+                    <label for="Last Name">Last Name:*</label><span id="lNameMsg"></span><br>
+                    <input type="text" name="lName" placeholder="Enter your last name" id="lastName"><br><br>
+        
+                    <label for="Gender">Gender:*</label><span id="genderMsg"></span><br>
+                    <select name="gender">
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select><br><br>
+        
+                    <label for="Email ID">Email ID:*</label><span id="emailMsg"></span><br>
+                    <input type="email" name="emailID" placeholder="Enter your email ID" multiple><br><br>
+        
+                    <label for="Password">Enter Password:*</label><span id="passwordMsg"></span><br>
+                    <input type="password" name="passWord" placeholder="Choose password"><br><br>
+        
+                    <label for="PhoneNumber">Contact Number:*</label><span id="phoneNumMsg"></span><br>
+                    <input type="text" name="phoneNumber" placeholder="Enter your contact number"><br><br>
+        
+                    <label for="Interest">Your Interest Areas:</label><br>
+                    <input type="checkbox" value="Sports"><label for="Sports">Sports</label>
+                    <input type="checkbox" value="Movies"><label for="Movies">Movies</label>
+                    <input type="checkbox" value="Others"><label for="Others">Others</label><br><br>
+        
+                    <label for="Submit"></label>
+                    <input type="submit" onClick="RegistrationForm()" value="Submit Form">
+                    <input type="reset" value="Reset Form">
+            </form>
+    </div>
+    
+
+    <script src="../JS/registration.js">
+    </script>
+</body>
+</html>
