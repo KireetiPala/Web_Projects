@@ -23,10 +23,8 @@ function clocky() {
     var object2 = function () {
         document.getElementById("time").innerHTML = clock;
         document.getElementById("time").style.color = "#fff";
-        // document.getElementById("time").style.textDecoration = "underline";
         document.body.style.backgroundColor = color;
     }
-
     setTimeout(object2, 1000);
 
     setTimeout(clocky, 1000);
@@ -40,9 +38,7 @@ function onLoginFormSubmit() {
     var admintype = "";
 
     if (validateLoginForm()) {
-
         var dbboolean = checkUserDataInDB();
-
         if (dbboolean == true) {
             isValid = true;
             admintype = confirmLoginType();
@@ -107,14 +103,11 @@ function validateLoginForm() {
     function checkPassword() {
         var passwordMsg = "Please enter your password";
         var invalidPasswordMsg = "Please enter valid password";
-
         var password = document.getElementById("loginPassword").value;
-
         if (password == "") {
             document.getElementById("error_Password").innerHTML = passwordMsg;
             psd = true;
         } else {
-
             validatePassword(password);
             if (isValid == true) {
                 document.getElementById("error_Password").innerHTML = "";
@@ -181,12 +174,10 @@ function resetFormFeilds() {
 
 
 // below code is for sign page
-
 function onSignFormSubmit() {
     var isValid = "";
 
     if (validateSignInForm()) {
-
         storeSignInData();
         alert("You are successfully registered, Please try to Login now");
         resetRegisterForm();
@@ -194,11 +185,9 @@ function onSignFormSubmit() {
             window.location = "Login.html"
         });
         isValid = true;
-
     } else {
         isValid = false;
     }
-
     return isValid;
 }
 
@@ -213,7 +202,6 @@ function validateSignInForm() {
     document.getElementById("error_reenterpassword").innerHTML = "";
     document.getElementById("error_contactNum").innerHTML = "";
 
-
     var fName = false;
     var lName = false;
     var gder = false;
@@ -225,27 +213,21 @@ function validateSignInForm() {
     firstName.onblur = function () {
         checkFirstName();
     }
-
     lastName.onblur = function () {
         checkLastName();
     }
-
     gender.onblur = function () {
         checkGender();
     }
-
     registerEmailID.onblur = function () {
         checkregisterEmailID();
     }
-
     registerPassword.onblur = function () {
         checkregPassword();
     }
-
     reenterPassword.onblur = function () {
         checkregRePassword();
     }
-
     regcontactNum.onblur = function () {
         checkContactNum();
     }
@@ -415,7 +397,6 @@ function validateSignInForm() {
     } else {
         return false;
     }
-
 }
 
 function storeSignInData() {
@@ -445,7 +426,6 @@ function storeSignInData() {
     };
 
     localStorage.setItem(EmailID, JSON.stringify(SignInFormObject));
-
 }
 
 function resetRegisterForm() {
@@ -470,7 +450,6 @@ function validatePassword(password) {
 
 function checkdatainDatabase(EmailID) {
     var regEmailID = document.getElementById("registerEmailID").value;
-
     var databaseFlag = localStorage.getItem(regEmailID);
 
     if (databaseFlag) {
@@ -495,7 +474,6 @@ var selectedIndex = -1;
 
 function onAddProductPressed() {
     isValid = "";
-
     if (validateCRUDProductForm()) {
         isValid = true;
         addProductRecord();
@@ -546,7 +524,6 @@ function validateCRUDProductForm() {
         validateDiscountPrice();
     }
 
-
     function validateProductName() {
         var pNameMsg = "Please enter Product Name";
         var pNameMsg1 = "Please enter Valid Product Name";
@@ -568,16 +545,30 @@ function validateCRUDProductForm() {
     function validateproductId() {
         var pNumMsg = "Please enter Product ID";
         var pNumMsg1 = "Please enter valid Product ID";
+        var pNumMsg2 = "Please enter unique Product ID which is not added already";
 
         var pNumValue = document.getElementById("productID").value;
+
         if (pNumValue == "") {
             pNum = true;
             document.getElementById("error_productID").innerHTML = pNumMsg;
         } else {
             if (validatepNumValue(pNumValue)) {
-                pNum = false;
-                document.getElementById("error_productID").innerHTML = "";
-            } else {
+                if (selectedIndex === -1) {
+                    if (piddupcheck(pNumValue)) {
+                        pNum = false;
+                        document.getElementById("error_productID").innerHTML = "";
+                    }
+                    else {
+                        pNum = true;
+                        document.getElementById("error_productID").innerHTML = pNumMsg2;
+                    }
+                } else {
+                    pNum = false;
+                    document.getElementById("error_productID").innerHTML = "";
+                }
+            }
+            else {
                 pNum = true;
                 document.getElementById("error_productID").innerHTML = pNumMsg1;
             }
@@ -669,7 +660,6 @@ function validateCRUDProductForm() {
         }
     }
 
-
     validateProductName();
     validateproductId();
     validateproductDesc();
@@ -700,11 +690,16 @@ function addProductRecord() {
         ProductDesc: ProductDesc, ProductPrice: ProductPrice, ProductDPrice: ProductDPrice,
         ProductURL: ProductURL, ProductDiscount: ProductDiscount
     };
-
     if (selectedIndex === -1) {
         productsDetailsArray.push(ProductRecordObject);
     } else {
-        productsDetailsArray.splice(selectedIndex, 1, ProductRecordObject);
+        for (var i = 0; i < productsDetailsArray.length; i++) {
+            let tempAL = productsDetailsArray[i];
+            if (tempAL.ProductID == selectedIndex) {
+                console.log(i);
+                productsDetailsArray.splice(i, 1, ProductRecordObject);
+            }
+        }
     }
 
     localStorage.setItem('ProductRecord', JSON.stringify(productsDetailsArray));
@@ -712,18 +707,23 @@ function addProductRecord() {
     refreshData();
     resetadminForm();
     alert("Product information is added successfully. Please check below..!")
-
 }
 
-function deleteProductRecord(index) {
-    productsDetailsArray.splice(index, 1);
+function deleteProductRecord(ProductID) {
+    console.log(ProductID);
+    productsDetailsArray = productsDetailsArray.filter(item => item.ProductID != ProductID);
     localStorage.ProductRecord = JSON.stringify(productsDetailsArray);
     refreshData();
 }
 
-function editProductRecord(index) {
-    selectedIndex = index;
-    var ProductRecordObject = productsDetailsArray[index];
+function editProductRecord(ProductID) {
+    selectedIndex = ProductID;
+    var ProductRecordObject = {};
+    productsDetailsArray.map(items => {
+        if (items.ProductID == ProductID) {
+            ProductRecordObject = items;
+        }
+    })
     document.getElementById("productName").value = ProductRecordObject.ProductName;
     document.getElementById("productID").value = ProductRecordObject.ProductID;
     document.getElementById("productDesc").value = ProductRecordObject.ProductDesc;
@@ -732,38 +732,36 @@ function editProductRecord(index) {
     document.getElementById("productImageURL").value = ProductRecordObject.ProductURL;
     document.getElementById("productDiscountPer").value = ProductRecordObject.ProductDiscount;
     document.getElementById("submit").value = "Update Record";
+    document.getElementById("productID").readOnly = true;
+    let pidLebel = document.getElementById("pidLebel");
+    pidLebel.style.top = "-15px";
+    pidLebel.style.color = "#11A15D";
+    pidLebel.style.fontWeight = "bold";
+    pidLebel.style.fontSize = "13px";
 }
 
 function refreshData() {
-    // document.getElementById("TableRows").innerHTML = "";
     var pageType = document.title;
-
     if (localStorage.ProductRecord) {
-        productsDetailsArray = JSON.parse(localStorage.ProductRecord);
-        for (var i = 0; i < productsDetailsArray.length; i++) {
+        productsDetailsArray = JSON.parse(localStorage.getItem('ProductRecord'));
+        for (var i = 0; i <= productsDetailsArray.length; i++) {
             if (pageType == "Admin Page") {
                 document.getElementById("productsView").innerHTML = `
-            ${productsDetailsArray.map(productsTemplate, i).join("")}
-            `;
-            } else {
-                document.getElementById("productsView").innerHTML = `
-            ${productsDetailsArray.map(customerTemplate, i).join("")}
+            ${productsDetailsArray.map(productsTemplate).join("")}
             `;
             }
-
-            //    prepareDiv(productsDetailsArray[i].ProductName, productsDetailsArray[i].ProductID,
-            //     productsDetailsArray[i].ProductDesc, productsDetailsArray[i].ProductPrice,
-            //     productsDetailsArray[i].ProductURL, productsDetailsArray[i].ProductDiscount, i);
+            else {
+                document.getElementById("productsView").innerHTML = `
+            ${productsDetailsArray.map(customerTemplate).join("")}
+            `;
+            }
         }
 
-        // document.getElementById("productsView").innerHTML = `
-        // ${productsDetailsArray.map(productsTemplate).join("")}
-        // `;
-
     }
+
 }
 
-function productsTemplate(products, index) {
+function productsTemplate(products) {
     return `
     <section class="adjustmargintop">
         <article>
@@ -781,7 +779,7 @@ function productsTemplate(products, index) {
                         <strong>₹${products.ProductDPrice} </strong>
                         <span class="originalPrice">₹${products.ProductPrice} </span>
                         <p class="discountPer">${products.ProductDiscount}% off</p>                    
-                        <button onclick="editProductRecord('${index}')">Edit</button></br><button onclick="deleteProductRecord('${index}')">Delete</button>
+                        <button onclick="editProductRecord('${products.ProductID}')">Edit</button></br><button onclick="deleteProductRecord('${products.ProductID}')">Delete</button>
                     </figcaption>
                 </a>
             </figure>
@@ -789,7 +787,7 @@ function productsTemplate(products, index) {
     </section>
     `
 }
-function customerTemplate(products, index) {
+function customerTemplate(products) {
     return `
     <section class="adjustmargintop">
         <article>
@@ -807,7 +805,7 @@ function customerTemplate(products, index) {
                         <strong>₹${products.ProductDPrice} </strong>
                         <span class="originalPrice">₹${products.ProductPrice} </span>
                         <p class="discountPer">${products.ProductDiscount}% off</p>                    
-                        <button onclick="viewMoreDetails('${index}')">Explore More Details</button>
+                        <button onclick="viewMoreDetails('${products.ProductID}')">Explore More Details</button>
                     </figcaption>
                 </a>
             </figure>
@@ -815,34 +813,10 @@ function customerTemplate(products, index) {
     </section>
     `
 }
-
-function viewMoreDetails(index) {
-    localStorage.setItem("indexValue", index);
+function viewMoreDetails(ProductID) {
+    localStorage.setItem("ProductID", ProductID);
     window.location.assign("productDetails.html");
 }
-// function prepareDiv(ProductName, ProductID, ProductDesc, ProductPrice, ProductURL, ProductDiscount, index){
-//     var table = document.getElementById("TableRows");
-
-//     var row = table.insertRow();
-//     var ProductNameCell     = row.insertCell(0);
-//     var ProductIDCell       = row.insertCell(1);
-//     var ProductDescCell     = row.insertCell(2);
-//     var ProductPriceCell    = row.insertCell(3);
-//     var ProductURLCell      = row.insertCell(4);
-//     var ProductDiscountCell = row.insertCell(5);
-//     var actionCell          = row.insertCell(6);
-
-//     ProductNameCell.innerHTML       = ProductName;
-//     ProductIDCell.innerHTML         = ProductID;
-//     ProductDescCell.innerHTML       = ProductDesc;
-//     ProductPriceCell.innerHTML      = ProductPrice;
-//     ProductURLCell.innerHTML        = ProductURL;
-//     ProductDiscountCell.innerHTML   = ProductDiscount;
-//     actionCell.innerHTML            = '<button onclick="editProductRecord('+ index +')">Edit</button></br><button onclick="deleteProductRecord('+ index +')">Delete</button>';
-
-
-
-// }
 
 function resetadminForm() {
     selectedIndex = -1;
@@ -853,10 +827,11 @@ function resetadminForm() {
     document.getElementById("discountPrice").value = "";
     document.getElementById("productImageURL").value = "";
     document.getElementById("productDiscountPer").value = "";
+    document.location.reload(true);
 }
 
 function validatepNameValue(pNameValue) {
-    var pNamePattern = /^[a-zA-Z ]*$/;
+    var pNamePattern = /^[a-zA-Z0-9 ]*$/;
     isValid = pNamePattern.test(pNameValue);
     return isValid;
 }
@@ -906,34 +881,20 @@ function validateEmail(email) {
     isValid = mailPattern.test(email);
     return isValid;
 }
-
-// below code is for customer page
-
-function ShowProductsAvailable() {
-    document.getElementById("CustomerProductsView").innerHTML = "";
-
+function piddupcheck(PID) {
+    isValid = true;
     if (localStorage.ProductRecord) {
-        productsDetailsArray = JSON.parse(localStorage.ProductRecord);
-        for (var i = 0; i < productsDetailsArray.length; i++) {
-            preparePageView(productsDetailsArray[i].ProductURL);
+        let tempData = JSON.parse(localStorage.getItem('ProductRecord'));
+        let tempPID = tempData.map(item => item.ProductID);
+        for (let i = 0; i < tempPID.length; i++) {
+            if (tempPID[i] == PID) {
+                isValid = false;
+            }
         }
     }
+    return isValid;
 }
-function preparePageView(ProductURL) {
-    // var bgimg = document.getElementById("CustomerProductsView");
-    var imgurl = "url(" + ProductURL + ")";
-    console.log(imgurl);
-    document.getElementById("CustomerProductsView").style.background = imgurl;
 
-    var table = document.getElementById("CustomerProductsView");
-    var row = table.insertRow();
-    var td = row.insertCell();
-
-    // td.innerHTML = '<button><img src="imgurl" alt="Hi"/></button>';
-    td.style.background = imgurl;
-    td.style.height = "500px"
-
-}
 
 // ---------------Product View Page JS-------------
 
@@ -947,30 +908,31 @@ function onloadProductInfo() {
     const cartTotal = document.querySelector(".cart-total");
     const clearCart = document.querySelector(".clear-cart");
 
-
-    var indexValue = localStorage.getItem("indexValue");
+    var productID = localStorage.getItem("ProductID");
     const productViewLeft = document.getElementById("productViewLeft");
     const productViewRight = document.getElementById("productViewRight");
 
-    let tempArray = [];
-    var getProductsArray = [];
-    var getcartArray = [];
+    var productArray = [];
+    let Cart = [];
     var tempCartArray = [];
-    let cartItems = [];
 
     // get product details class
     class getProductsDetails {
-        async getproduct() {
+        async getproduct(productID) {
             if (localStorage.ProductRecord) {
-                tempArray = JSON.parse(localStorage.ProductRecord);
-                getProductsArray = tempArray[indexValue];
+                let tempAD = JSON.parse(localStorage.ProductRecord);
+                tempAD.map(items => {
+                    if (items.ProductID == productID) {
+                        productArray = items;
+                    }
+                })
             }
-            return getProductsArray;
+            return productArray;
         }
     }
     // display products class
     class displayProductDetails {
-        async displayProduct(productDetails, indexValue) {
+        async displayProduct(productDetails) {
             let result1 = "";
             let result2 = "";
             result1 += `
@@ -989,8 +951,7 @@ function onloadProductInfo() {
             productViewLeft.innerHTML = result1;
 
             let months = 12;
-            let TempDprice1 = productDetails.ProductDPrice;
-            let TempDprice2 = TempDprice1.replace(/\,/g, "");
+            let TempDprice = productDetails.ProductDPrice;
 
             result2 += `
             <section>
@@ -1008,7 +969,7 @@ function onloadProductInfo() {
                     <div>
                         <p> 
                             <img class="Iconimage" src="https://rukminim1.flixcart.com/www/36/36/promos/06/09/2016/49f16fff-0a9d-48bf-a6e6-5980c9852f11.png?q=90" />
-                            No cost EMI ₹ ${Math.round(TempDprice2 / months)}/month. Standard EMI also available
+                            No cost EMI ₹ ${Math.round(TempDprice / months)}/month. Standard EMI also available
                             <a id="viewPlans" href="#">View Plans></a>
                         </p>               
                         <p>
@@ -1027,63 +988,63 @@ function onloadProductInfo() {
             productViewRight.innerHTML = result2;
         }
 
-        getAddCartBtn(indexValue) {
+        getAddCartBtn(productID) {
             const button = document.getElementById("addToCart");
             if (localStorage.cart) {
+                var productPresent = false;
                 tempCartArray = JSON.parse(localStorage.getItem('cart'));
-                let cartItems = tempCartArray[indexValue];
-                if (cartItems) {
+                tempCartArray.map(item => {
+                    if (item.ProductID == productID) {
+                        productPresent = true;
+                    }
+                })
+                if (productPresent) {
                     button.innerText = "IN CART";
                     button.disabled = true;
                 }
             }
-            else {
-                button.addEventListener("click", event => {
-                    button.innerText = "IN CART";
-                    button.disabled = true;
-                    // get product from Products and add quanity as 1                    
-                    cartItems = { ...getProductsArray, Quantity: 1 };
-                    // add product to cart
-                    tempCartArray = [cartItems];
-                    // save cart in local storage
-                    storeProductDetails.saveCart(tempCartArray);
-                    // set cart values
-                    console.log("else codition");
-                    this.setCartValue(cartItems);
-                    // display cart item
-                    this.addCartItem(cartItems, indexValue);
-                    // show cart item
-                    this.showCart();
-                })
-            }
+            button.addEventListener("click", event => {
+                button.innerText = "IN CART";
+                button.disabled = true;
+                // get product from Products and add quanity as 1                    
+                let cartitem = { ...productArray, Quantity: 1 };
+                // add product to cartArray
+                Cart = [...Cart, cartitem];
+                // save cart in local storage
+                storeProductDetails.saveCart(Cart);
+                // set cart values                
+                this.setCartValue(Cart);
+                // display cart item
+                this.addCartItem(cartitem);
+                // show cart item
+                this.showCart();
+            })
         }
-        setCartValue(cartItems) {
-            let cartTempVal = 0;
-            let itemsTotals = 0;
-
-            let PDPriceTemp = cartItems.ProductDPrice;
-            let PDPrice = PDPriceTemp.replace(/\,/g, "");
-
-            cartTempVal += cartItems.Quantity;
-            itemsTotals += PDPrice * cartItems.Quantity;
-
-            cartItemVal.innerHTML = cartTempVal;
-            cartTotal.innerText = parseInt(itemsTotals.toFixed(2));
+        setCartValue(Cart) {
+            let tempCartVal = 0;
+            let tempCartTotals = 0;
+            let cartlenght = Cart.length;
+            tempCartVal += cartlenght;
+            Cart.map(item => {
+                tempCartTotals += item.ProductDPrice * item.Quantity;
+            })
+            cartItemVal.innerHTML = tempCartVal;
+            cartTotal.innerText = parseInt(tempCartTotals.toFixed(2));
         }
-        addCartItem(cartItems, indexValue) {
+        addCartItem(cartitem) {
             const div = document.createElement('div');
             div.classList.add('cart-item');
             div.innerHTML = `
-                <img src="${cartItems.ProductURL}" alt="product">
+                <img src="${cartitem.ProductURL}" alt="product">
                 <div>
-                    <h4>${cartItems.ProductName}</h4>
-                    <h5>$${cartItems.ProductDPrice}</h5>
-                    <span class="remove-item" data-id="${indexValue}">remove</span>
+                    <h4>${cartitem.ProductName}</h4>
+                    <h5>$${cartitem.ProductDPrice}</h5>
+                    <span class="remove-item" data-id="${cartitem.ProductID}">remove</span>
                 </div>
                 <div>
-                    <i class="fa fa-chevron-up" data-id="${indexValue}"></i>
-                    <p class="item-amount">${cartItems.Quantity}</p>
-                    <i class="fa fa-chevron-down" data-id="${indexValue}"></i>
+                    <i class="fa fa-chevron-up" data-id="${cartitem.ProductID}"></i>
+                    <p class="item-amount">${cartitem.Quantity}</p>
+                    <i class="fa fa-chevron-down" data-id="${cartitem.ProductID}"></i>
                 </div>
             `;
             cartContent.appendChild(div);
@@ -1092,164 +1053,111 @@ function onloadProductInfo() {
             cartOverlay.classList.add('transparentBcg');
             cart.classList.add('showCart');
         }
-        setupAPP(indexValue) {
-            tempCartArray = storeProductDetails.getCart();
-
-            let cartItems = tempCartArray[indexValue];
-
-            if (cartItems) {
-                this.setCartValue(cartItems);
-                this.populateCart(cartItems, indexValue);
-                cartbtn.addEventListener('click', this.showCart);
-                closeCart.addEventListener('click', this.hideCart);
-            }
-
+        setupAPP() {
+            Cart = storeProductDetails.getCart();
+            this.setCartValue(Cart);
+            this.populateCart(Cart);
+            cartbtn.addEventListener('click', this.showCart);
+            closeCart.addEventListener('click', this.hideCart);
         }
-        populateCart(cartItems, indexValue) {
-            let tempCartArray = [cartItems];
-            tempCartArray.forEach(cartItems => {
-                this.addCartItem(cartItems, indexValue);
-            });
+        populateCart(Cart) {
+            Cart.forEach(cartitem => this.addCartItem(cartitem));
         }
         hideCart() {
             cartOverlay.classList.remove('transparentBcg');
             cart.classList.remove('showCart');
         }
         cartLogic() {
+            // clearing entire cart items
             clearCart.addEventListener('click', () => {
-                this.clearCart(cartItems);
+                this.clearCart();
             });
+            // cart content functionality
             cartContent.addEventListener('click', event => {
-                console.log(event.target);
+                // let button = document.getElementById("addToCart");
+                if (event.target.classList.contains("remove-item")) {
+                    let removeItem = event.target;
+                    let id = removeItem.dataset.id;
+                    cartContent.removeChild(removeItem.parentElement.parentElement);
+                    this.removeItem(id);
+                }
+                else if (event.target.classList.contains("fa-chevron-up")) {
+                    let upAmount = event.target;
+                    let id = upAmount.dataset.id;
+                    let tempItem = Cart.find(item => item.ProductID == id);
+                    tempItem.Quantity = tempItem.Quantity + 1;
+                    storeProductDetails.saveCart(Cart);
+                    this.setCartValue(Cart);
+                    let itemValue = event.target.nextElementSibling;
+                    itemValue.innerText = tempItem.Quantity;
+                }
+                else if (event.target.classList.contains("fa-chevron-down")) {
+                    let lowerAmount = event.target;
+                    let id = lowerAmount.dataset.id;
+                    let tempItem = Cart.find(item => item.ProductID == id);
+                    tempItem.Quantity = tempItem.Quantity - 1;
+
+                    if (tempItem.Quantity > 0) {
+                        storeProductDetails.saveCart(Cart);
+                        this.setCartValue(Cart);
+                        lowerAmount.previousElementSibling.innerText = tempItem.Quantity;
+                    } else {
+                        cartContent.removeChild
+                            (lowerAmount.parentElement.parentElement);
+                        this.removeItem(id);
+                    }
+                }
             });
         }
-        clearCart(cartItems) {
+        clearCart() {
+            let cartIDs = Cart.map(item => item.ProductID);
+            cartIDs.forEach(id => this.removeItem(id));
 
+            while (cartContent.children.length > 0) {
+                cartContent.removeChild(cartContent.children[0])
+            }
+            this.hideCart();
+        }
+        removeItem(id) {
+            Cart = Cart.filter(item => item.ProductID != id);
+            this.setCartValue(Cart);
+            storeProductDetails.saveCart(Cart);
+
+            let button = document.getElementById("addToCart");
+            button.innerText = "ADD TO CART";
+            button.disabled = false;
         }
     }
 
     // store product details class
     class storeProductDetails {
-        static saveCart(tempCartArray) {
-            // productsDetailsArray.splice(selectedIndex, 1, ProductRecordObject);
-            localStorage.setItem('cart', JSON.stringify(tempCartArray));
+        static saveCart(Cart) {
+            localStorage.setItem('cart', JSON.stringify(Cart));
         }
         static getCart() {
-            if (localStorage.cart) {
-                cartItems = JSON.parse(localStorage.getItem('cart'));
-            }
-            else {
-                cartItems = [];
-            }
-            return cartItems;
+            return localStorage.getItem('cart') ? JSON.parse
+                (localStorage.getItem('cart')) : []
         }
 
     }
 
     const getPDObject = new getProductsDetails();
     const displayPDObject = new displayProductDetails();
-    console.log("starting codition");
-    console.log(indexValue);
-    displayPDObject.setupAPP(indexValue);
-    getPDObject.getproduct().then(productDetails => {
-        displayPDObject.displayProduct(productDetails, indexValue);
-    }
-    ).then(() => {
-        displayPDObject.getAddCartBtn(indexValue);
+
+    //set up Application
+    displayPDObject.setupAPP();
+
+    //get product information    
+    getPDObject.getproduct(productID).then(product => {
+        displayPDObject.displayProduct(product);
+    }).then(() => {
+        displayPDObject.getAddCartBtn(productID);
         displayPDObject.cartLogic();
     });
 }
 function goToCustPage() {
     window.location.assign("customerPage.html");
 }
-
-
-
-
-    // document.addEventListener("DOMContentLoaded", () => {
-    //     const getProduct = new getProductsDetails();
-    //     const displayProduct = new displayProductDetails();
-
-    //     getProduct.getproduct();
-    // });
-
-
-
-
-
-
-
-    // document.getElementById("productViewLeft").innerHTML = "";
-    // document.getElementById("productViewRight").innerHTML = "";
-
-    // var indexValue = localStorage.getItem("indexValue");
-
-    // if (localStorage.ProductRecord) {
-    //     getProductsArray = JSON.parse(localStorage.ProductRecord);
-    //     var tempObject = getProductsArray[indexValue];
-    //     document.getElementById("productViewLeft").innerHTML = `
-    //     ${productViewTemplate1(tempObject, indexValue)}
-    //     `;
-    //     document.getElementById("productViewRight").innerHTML = `
-    //     ${productViewTemplate2(tempObject)}
-    //     `;
-    // }
-
-
-
-// function productViewTemplate1(tempObject, index) {
-//     return `
-//     <section id="">
-//         <article>
-//                 <div id="imgDimen"> 
-//                     <img src="${tempObject.ProductURL}" alt="" width="430px" height="350px"  />
-//                 </div>    
-
-//                 <div id="btnProductView">
-//                     <button id="btnStyle1" onclick="addToCart('${index}')">ADD TO CART</button><button id="btnStyle2" onclick="buyNow('${index}')">BUY NOW</button>
-//                 </div>
-//         </article>
-//     </section>    
-//     `
-// }
-// function productViewTemplate2(tempObject) {
-//     var months = 12;
-//     var TempDprice1 = tempObject.ProductDPrice;
-//     var TempDprice2 = TempDprice1.replace(/\,/g, "");
-//     return `
-//     <section>
-//         <article>
-//             <div>
-//                 <strong>
-//                     ${tempObject.ProductDesc}
-//                 </strong>
-//             </div>
-//             <div id="div2">
-//                 <strong>₹${tempObject.ProductDPrice} </strong>
-//                 <span class="originalPrice">₹${tempObject.ProductPrice} </span>
-//                 <p class="discountPer">${tempObject.ProductDiscount}% off</p>     
-//             </div>
-//             <div>
-//                 <p> 
-//                     <img class="Iconimage" src="https://rukminim1.flixcart.com/www/36/36/promos/06/09/2016/49f16fff-0a9d-48bf-a6e6-5980c9852f11.png?q=90" />
-//                     No cost EMI ₹ ${Math.round(TempDprice2 / months)}/month. Standard EMI also available
-//                     <a id="viewPlans" href="#">View Plans></a>
-//                 </p>               
-//                 <p>
-//                     <img class="Iconimage" src="https://rukminim1.flixcart.com/www/36/36/promos/06/09/2016/c22c9fc4-0555-4460-8401-bf5c28d7ba29.png?q=90" />
-//                     Bank Offer10% Instant Discount* with Axis Bank Credit and Debit Cards 
-//                     <a id="viewPlans" href="#">T&C></a>
-//                 </p>
-//                 <p>
-//                     1 Year Onsite Warranty
-//                     <a id="viewPlans" href="#">Know More></a>
-//                 </p>
-//             </div>
-//         </article>
-//     </section>    
-//     `
-// }
-
 // -----------End of Product View Page JS----------
 
 
