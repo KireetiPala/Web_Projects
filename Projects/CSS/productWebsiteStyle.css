@@ -474,8 +474,10 @@ button:hover{
 #productViewRight{
     margin-top: 20px;
     float: left;
-    height: 500px;
-    
+    height: 500px;    
+}
+.s3{
+    margin-top: 400px;
 }
 #btnProductView{
     margin-top: 70px;

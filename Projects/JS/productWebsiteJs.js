@@ -935,6 +935,7 @@ function onloadProductInfo() {
         async displayProduct(productDetails) {
             let result1 = "";
             let result2 = "";
+            // let result3 = "";
             result1 += `
             <section id="">
                 <article>
@@ -986,6 +987,16 @@ function onloadProductInfo() {
             </section>    
             `;
             productViewRight.innerHTML = result2;
+            // result3 += `
+            // <section class="s3">
+            //     <article>
+            //         <div>
+            //             <p> hiii</p>
+            //         </div>                   
+            //     </article>
+            // </section>    
+            // `;
+            // productViewRight.innerHTML = result3;
         }
 
         getAddCartBtn(productID) {
@@ -1154,11 +1165,14 @@ function onloadProductInfo() {
         displayPDObject.getAddCartBtn(productID);
         displayPDObject.cartLogic();
     });
+
 }
 function goToCustPage() {
     window.location.assign("customerPage.html");
 }
 // -----------End of Product View Page JS----------
+
+
 
 
 
